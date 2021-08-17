@@ -1,0 +1,12 @@
+- Trustee :
+            1) 5 Trustees (form)  {email} -khalid
+            
+            2) 1 month buffer -aman
+                - notify before 10days , 5days  
+                after succesful completion of buffer
+
+            3) after 1 month -> upload death certifi (form link) -rohit
+                
+                - verify Trustees will upload DC -> verify all of the using OpenCv
+                
+                - release to resp mails of Trustees

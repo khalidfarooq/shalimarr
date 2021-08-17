@@ -1,0 +1,49 @@
+{% extends 'main/base.html' %}
+{%block content%}
+{% load account %}
+<style>
+    .card{
+        width: 15rem;
+        margin: 20px 20px;
+        border-style: none;
+        border-radius: 11px;
+        background: #f4f4f4;
+        box-shadow:  5px 5px 6px #e0e0e0,
+                    -5px -5px 6px #ffffff;
+    }
+    .card .card-body .card-text{
+        font-size: 3rem;"
+    }
+    .card .card-title{
+        padding-top: 10px;
+        font-size: 1rem;
+    }
+    .col   {
+        margin: 10px;
+    }
+</style>
+<section>
+    <div class="row d-flex flex-row justify-content-center ">
+        <div class="card text-center" >
+            <h5 class="card-title" >Property docs</h5>
+            <div class="card-body">
+            <p class="card-text">{{count_property}}</p>
+            </div>
+        </div>
+        <div class="card text-center" >
+            <h5 class="card-title">Identity docs</h5>
+            <div class="card-body">
+            <p class="card-text">{{count_identity}}</p>
+            </div>
+        </div>
+        <div class="card text-center" >
+            <h5 class="card-title" >Other docs</h5>
+            <div class="card-body">
+            <p class="card-text">{{count_other}}</p>
+            </div>
+        </div>
+    </div>
+   
+    
+</section>
+{% endblock %}

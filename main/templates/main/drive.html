@@ -1,0 +1,116 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title%}Drive{% endblock title%}
+{% block content%}
+
+
+<!-- ------------------------------ BUTTON ---------------------------------- -->
+<form class="row g-3" enctype="multipart/form-data" method="post" action="/api/file?profile={{profile.id}}">
+  {% csrf_token %}
+
+  <div class="mb-2">
+    <label for="formFile" class="form-label">Upload to drive</label>
+    <input class="form-control" type="file" name="file_data" required/>
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <label for="choices" class="input-group-text">Categories</label>
+    </div>
+    <select name="file_category" id="choices" class="custom-select">
+      <option selected>Choose...</option>
+      <option value="Property">Property</option>
+      <option value="Identity">Identity</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-secondary" style="width: 100px">
+      <img src="{% static 'main/images/upload.svg' %}" width="30px" />
+    </button>
+  </div>
+ 
+</form>
+
+<!-- ------------------------------ BUTTON ---------------------------------- -->
+
+<!-- ------------------------------ TABLE ---------------------------------- -->
+<br/><hr>
+<div class="table-heading">
+  <h2 style="text-align: center;">FILES ADDED</h2>
+</div>
+<hr>
+<div class="search-box" style="
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 10px;
+        
+      ">
+      <input id="table-input" type="text" placeholder="Search......"
+        style="border: 0; width: 50%;" 
+        onkeyup="tableSearch()"
+        />
+    </div>
+<table class="table table-striped" id="table">
+  <thead>
+    <tr>
+      <th scope="col" >SERIAL NO.</th>
+      <th scope="col" >FILE NAME</th>
+      <th scope="col" >Category</th>
+      <th scope="col" >UPLOADED ON</th>
+      <th scope="col" >FILE SIZE</th>
+      <th scope="col" >VIEW</th>
+      {% comment %} <th scope="col">EDIT</th> {% endcomment %}
+      <th scope="col">DELETE</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for file in files %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{file.file_name}}</td>
+      <td>{{file.category}}</td>
+      <td>{{file.created_at}}</td>
+      <td>{{file.file_size}}</td>
+      <td>
+        <a href="/view/{{file.fid}}" target="_blank"> <button class="viewbtn btn btn-info" style="border-left: 1px solid royalblue">
+            View
+          </button></a>
+      </td>
+      <td>
+        <a href="/delete/{{file.fid}}"> <button onclick="confirmation()" type="submit" class="delbtn btn btn-danger"
+            style="border-left: 1px solid royalblue">
+            Delete
+          </button></a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<script>
+  function confirmation() {
+    alert("Are you sure you want to delete the file?");
+  }
+  function tableSearch() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("table-input");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }
+
+</script>
+<!-- ------------------------------ TABLE ---------------------------------- -->
+
+{% endblock content%}

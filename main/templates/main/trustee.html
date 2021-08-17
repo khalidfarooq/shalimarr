@@ -1,0 +1,90 @@
+{% extends 'main/base.html' %}
+{%block content%}
+{% load account %}
+<style>
+    .card{
+        width: 15rem;
+        margin: 20px 20px;
+        border-style: none;
+        border-radius: 11px;
+        background: #f4f4f4;
+        box-shadow:  5px 5px 6px #e0e0e0,
+                    -5px -5px 6px #ffffff;
+    }
+    .trustee-card{
+        width: 25rem;
+    }
+    .card .card-body .card-text{
+        font-size: 3rem;
+    }
+    .card .card-title{
+        padding-top: 10px;
+        font-size: 1rem;
+    }
+    
+
+</style>
+
+<section>
+    
+    <div class="row d-flex flex-row justify-content-center ">
+        <div class="card text-center trustee-card" >
+            <h4 class="card-title" style="font-weight: bold;" >TRUSTEES</h4><hr>
+            <div class="card-body">
+                <form  method="POST">
+                    {% csrf_token %} 
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <!-- <input type="text" class="form-control" id="username" placeholder="Enter Username"> -->
+                        {{form.username}}                        
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <!-- <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"> -->
+                        {{form.email}}  
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped" id="table">
+        <thead>
+          <tr>
+            <th scope="col" >SERIAL NO.</th>
+            <th scope="col" >FILE NAME</th>
+            <th scope="col" >Category</th>
+            <th scope="col" >UPLOADED ON</th>
+            <th scope="col" >FILE SIZE</th>
+            <th scope="col" >VIEW</th>
+            {% comment %} <th scope="col">EDIT</th> {% endcomment %}
+            <th scope="col">DELETE</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for file in trustee %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{file.file_name}}</td>
+            <td>{{file.category}}</td>
+            <td>{{file.created_at}}</td>
+            <td>{{file.file_size}}</td>
+            <td>
+              <a href="/view/{{file.fid}}" target="_blank"> <button class="viewbtn btn btn-info" style="border-left: 1px solid royalblue">
+                  View
+                </button></a>
+            </td>
+            <td>
+              <a href="/delete/{{file.fid}}"> <button onclick="confirmation()" type="submit" class="delbtn btn btn-danger"
+                  style="border-left: 1px solid royalblue">
+                  Delete
+                </button></a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</section>
+
+{% endblock %}
